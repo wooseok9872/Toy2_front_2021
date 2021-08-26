@@ -20,6 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".IntroActivity">
         </activity>
         <activity android:name=".SignupActivity" />
@@ -27,6 +28,7 @@
         <activity android:name=".MypageActivity" />
         <activity android:name=".Friend_add"/>
         <activity android:name=".BottomNavigation"/>
+
     </application>
 
 </manifest>
