@@ -10,27 +10,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/black">
+        android:background="@color/black"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/today_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="오늘 날짜"
             android:textSize="25dp"
             android:textStyle="bold"
             android:textColor="#ffffff"
-            android:layout_gravity="center"
-            android:gravity="center"/>
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/black"
+            android:text="+"
+            android:layout_marginLeft="190dp"
+            android:textSize="45dp"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp">
 
         <TextView
-            android:id="@+id/percent"
+            android:id="@+id/percent_achievement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="%"
@@ -41,18 +52,17 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_todo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/add_button"
-        android:layout_width="170dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/black"
-        android:text="추가하기"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_todo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+    </ScrollView>
 
 </LinearLayout>

@@ -2,9 +2,11 @@ package com.example.myapplication.todo
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -15,7 +17,15 @@ import com.example.myapplication.R
 import kotlinx.android.synthetic.main.activity_todo_main.*
 import java.time.LocalDate
 
+var cnt: Int = 0
+//달성률을 위한 카운트
+
 class Todo_main : AppCompatActivity() {
+
+    fun get_percent(): TextView {
+        return percent_achievement
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_main)
@@ -25,7 +35,6 @@ class Todo_main : AppCompatActivity() {
         today_date.setText(todaydate)
 
         val planList: planlist = planlist()
-
 
         add_button.setOnClickListener {
             val builder = AlertDialog.Builder(this)
@@ -45,30 +54,31 @@ class Todo_main : AppCompatActivity() {
                 .show()
         }
 
-
         list_todo.adapter =
-            planAdapter(planList, LayoutInflater.from(this), activity = this)
+            planAdapter(planList, LayoutInflater.from(this), activity = this, percent_achievement)
         val manager = LinearLayoutManager(this)
-        manager.reverseLayout = true
-        manager.stackFromEnd = true
+        manager.reverseLayout = false
+        manager.stackFromEnd = false
         list_todo.layoutManager = manager
-
-
     }
 
 }
 
+
 class planAdapter(
     val plan_list: planlist,
     val inflater: LayoutInflater,
-    val activity: Activity
+    val activity: Activity,
+    val percent: TextView
 ) : RecyclerView.Adapter<planAdapter.ViewHolder>() {
 
     inner class ViewHolder(todo_view: View) : RecyclerView.ViewHolder(todo_view) {
         val planContent: TextView
+        val todoIsDone: CheckBox
 
         init {
             planContent = todo_view.findViewById(R.id.plan_content)
+            todoIsDone = todo_view.findViewById(R.id.check_box)
         }
     }
 
@@ -77,11 +87,29 @@ class planAdapter(
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
+    public override fun getItemCount(): Int {
+        val sum: Int = plan_list.planlist.size
+        Log.d("sum", "" + sum)
+
         return plan_list.planlist.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.planContent.setText(plan_list.planlist.get(position).content)
+
+        val todo = plan_list.planlist[position]
+
+        holder.planContent.text = todo.content
+
+        holder.todoIsDone.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                cnt++
+                Log.d("state", "" + cnt)
+
+            } else {
+                cnt--
+                Log.d("state--", "" + cnt)
+            }
+        }
     }
+
 }

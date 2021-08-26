@@ -1,6 +1,7 @@
 package com.example.myapplication.todo
 
-class plan(val content: String) {
+class plan(var content: String, var isDone : Boolean = false) {
+
 }
 
 class planlist() {
