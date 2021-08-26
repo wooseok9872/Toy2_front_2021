@@ -25,6 +25,8 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".MypageActivity" />
+        <activity android:name=".Friend_add"/>
+        <activity android:name=".BottomNavigation"/>
     </application>
 
 </manifest>
