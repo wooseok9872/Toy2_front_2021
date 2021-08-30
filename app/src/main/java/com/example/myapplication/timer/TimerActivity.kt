@@ -6,9 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_timer.*
 import java.text.SimpleDateFormat
 import java.util.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class TimerActivity : AppCompatActivity() {
@@ -82,10 +86,19 @@ class TimerActivity : AppCompatActivity() {
             editor.putString("time", timeAll.toString())
             editor.commit()
             all_time.text = timeToText(timeAll)
+
+            (application as MasterApplication).service.timer(timeAll.toString()).enqueue(object : Callback<Timer> {
+                override fun onResponse(call: Call<Timer>, response: Response<Timer>) {
+                    Toast.makeText(this@TimerActivity, "저장되었습니다.", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onFailure(call: Call<Timer>, t: Throwable) {
+                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_LONG).show()
+                }
+            })
         }
 
-        mypage.setOnClickListener { startActivity(Intent(this@TimerActivity, MypageActivity::class.java))
-        }
+        mypage.setOnClickListener { startActivity(Intent(this@TimerActivity, MypageActivity::class.java)) }
     }
 
     private fun timeToText(time: Int = 0) : String?{

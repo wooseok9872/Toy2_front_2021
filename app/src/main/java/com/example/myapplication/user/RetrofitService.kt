@@ -21,4 +21,16 @@ interface RetrofitService {
         @Field("password") password: String
     ): Call<User>
 
+    @POST("timer/")
+    @FormUrlEncoded
+    fun timer(
+        @Field("time") time: String
+    ): Call<Timer>
+
+    @PUT("timer?status={status}")
+    @FormUrlEncoded
+    fun status(
+        @Path("status") status: String,
+    )
+
 }
