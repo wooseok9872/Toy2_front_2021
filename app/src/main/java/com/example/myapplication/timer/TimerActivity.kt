@@ -69,6 +69,8 @@ class TimerActivity : AppCompatActivity() {
             it.visibility = View.GONE
             btn_stop.visibility = View.VISIBLE
             handler.post(runnable)
+
+            (application as MasterApplication).service.status("true")
         }
 
         btn_stop.setOnClickListener {
@@ -96,6 +98,8 @@ class TimerActivity : AppCompatActivity() {
                     Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_LONG).show()
                 }
             })
+
+            (application as MasterApplication).service.status("false")
         }
 
         mypage.setOnClickListener { startActivity(Intent(this@TimerActivity, MypageActivity::class.java)) }
