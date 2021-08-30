@@ -22,15 +22,13 @@ interface RetrofitService {
     ): Call<User>
 
     @POST("timer/")
-    @FormUrlEncoded
     fun timer(
-        @Field("time") time: String
+        @Body timer: Timer
     ): Call<Timer>
 
-    @PUT("timer?status={status}")
-    @FormUrlEncoded
+    @PUT("timer?status=")
     fun status(
-        @Path("status") status: String,
-    )
+        @Query("status") status: String,
+    ): Call<Timer>
 
 }

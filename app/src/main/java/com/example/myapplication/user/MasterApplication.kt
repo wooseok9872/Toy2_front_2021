@@ -44,7 +44,7 @@ class MasterApplication : Application() {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://lookie.pythonanywhere.com/")
+            .baseUrl("http://180.230.121.23/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

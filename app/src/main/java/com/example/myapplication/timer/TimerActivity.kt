@@ -30,6 +30,7 @@ class TimerActivity : AppCompatActivity() {
         var date = Date(now)
         var format = SimpleDateFormat("yyyy.MM.dd")
         var todayDate = format.format(date)
+        var strtime = "00:00:00"
 
         val sp = getSharedPreferences("data", Context.MODE_PRIVATE)
         val editor = sp.edit()
@@ -70,7 +71,19 @@ class TimerActivity : AppCompatActivity() {
             btn_stop.visibility = View.VISIBLE
             handler.post(runnable)
 
-            (application as MasterApplication).service.status("true")
+            (application as MasterApplication).service.status("true").enqueue(object : Callback<Timer> {
+                override fun onResponse(call: Call<Timer>, response: Response<Timer>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@TimerActivity, "변경되었습니다.", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@TimerActivity, "오류", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Timer>, t: Throwable) {
+                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_LONG).show()
+                }
+            })
         }
 
         btn_stop.setOnClickListener {
@@ -87,11 +100,17 @@ class TimerActivity : AppCompatActivity() {
             }
             editor.putString("time", timeAll.toString())
             editor.commit()
-            all_time.text = timeToText(timeAll)
+            strtime = timeToText(timeAll)
+            all_time.text = strtime
+            var timer = Timer(time=strtime)
 
-            (application as MasterApplication).service.timer(timeAll.toString()).enqueue(object : Callback<Timer> {
+            (application as MasterApplication).service.timer(timer).enqueue(object : Callback<Timer> {
                 override fun onResponse(call: Call<Timer>, response: Response<Timer>) {
-                    Toast.makeText(this@TimerActivity, "저장되었습니다.", Toast.LENGTH_LONG).show()
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@TimerActivity, "저장되었습니다.", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@TimerActivity, strtime, Toast.LENGTH_LONG).show()
+                    }
                 }
 
                 override fun onFailure(call: Call<Timer>, t: Throwable) {
@@ -99,16 +118,26 @@ class TimerActivity : AppCompatActivity() {
                 }
             })
 
-            (application as MasterApplication).service.status("false")
+            (application as MasterApplication).service.status("false").enqueue(object : Callback<Timer> {
+                override fun onResponse(call: Call<Timer>, response: Response<Timer>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@TimerActivity, "변경되었습니다.", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this@TimerActivity, "오류", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Timer>, t: Throwable) {
+                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_LONG).show()
+                }
+            })
         }
 
         mypage.setOnClickListener { startActivity(Intent(this@TimerActivity, MypageActivity::class.java)) }
     }
 
-    private fun timeToText(time: Int = 0) : String?{
-        return if (time < 0) {
-            null
-        } else if (time == 0) {
+    private fun timeToText(time: Int = 0) : String{
+        return if (time <= 0) {
             "00:00:00"
         } else {
             val h = time / 3600
