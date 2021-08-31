@@ -1,6 +1,7 @@
 package com.example.myapplication.todo
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,12 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.Friend_main
 import com.example.myapplication.R
+import com.example.myapplication.TimerActivity
 import kotlinx.android.synthetic.main.activity_todo_main.*
 import java.time.LocalDate
 
@@ -29,6 +33,21 @@ class Todo_main : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_main)
+
+        val home_button: ImageView = findViewById(R.id.home_button) as ImageView
+        val friend_button: ImageView = findViewById(R.id.friend_button) as ImageView
+        //타이머 화면으로 이동
+        home_button.setOnClickListener{
+            startActivity(Intent(this, TimerActivity::class.java))
+            finish()
+        }
+        //친구 화면으로 이동
+        friend_button.setOnClickListener{
+            startActivity(Intent(this, Friend_main::class.java))
+            finish()
+        }
+
+
 
         val date: LocalDate = LocalDate.now()
         val todaydate: String = date.toString()

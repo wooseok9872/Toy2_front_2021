@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,38 +19,58 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/free_icon_left_arrow_in_circular_button_black_symbol_54476" />
 
-        <androidx.appcompat.widget.SearchView
+
+        <EditText
             android:id="@+id/friend_search_input"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
+            android:hint="추가할 닉네임을 입력하세요"
             android:layout_height="wrap_content"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@drawable/search_view_round"
-            app:queryHint="추가할 닉네임을 입력하세요" />
+            android:layout_marginLeft="20dp" />
 
-        <ImageView
+        <Button
             android:id="@+id/friend_search_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/free_icon_magnifying_glass_search_16492" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/black"
+            android:text="검색" />
+
+
     </LinearLayout>
-
-
-    <ListView
-        android:id="@+id/friend_add_listView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#D3D3D3" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp">
-    </ListView>
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:fillViewport="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/friend_add_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </ScrollView>
+
+
+
+
 
     <Button
         android:id="@+id/friend_add_button"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
         android:backgroundTint="@color/black"
+        android:layout_marginTop="10dp"
         android:text="@string/add_button"
         android:textStyle="bold" />
 
