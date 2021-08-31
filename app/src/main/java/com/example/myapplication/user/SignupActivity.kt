@@ -31,8 +31,8 @@ class SignupActivity : AppCompatActivity() {
         if (password1 == password2) {
             (application as MasterApplication).service.register(
                 signup
-            ).enqueue(object: Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
+            ).enqueue(object: Callback<Signup> {
+                override fun onResponse(call: Call<Signup>, response: Response<Signup>) {
                     if (response.isSuccessful) {
                         Toast.makeText(activity, "가입에 성공하였습니다.", Toast.LENGTH_LONG).show()
 //                        val user = response.body()
@@ -41,11 +41,11 @@ class SignupActivity : AppCompatActivity() {
 //                        (application as MasterApplication).createRetrofit()
 //                        activity.startActivity(Intent(activity, BottomNavigation::class.java))
                     } else {
-                        Toast.makeText(activity, "가입에 실패하였습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, "사용할 수 없는 이메일입니다.", Toast.LENGTH_LONG).show()
                     }
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
+                override fun onFailure(call: Call<Signup>, t: Throwable) {
                     Toast.makeText(activity, "서버 오류", Toast.LENGTH_LONG).show()
                 }
             })

@@ -10,7 +10,7 @@ interface RetrofitService {
     @POST("user/signup/")
     fun register(
         @Body signup: Signup
-    ): Call<String>
+    ): Call<Signup>
 
 
     @POST("user/signin/")
