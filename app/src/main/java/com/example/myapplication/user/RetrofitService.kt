@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import com.example.myapplication.user.Signup
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -7,17 +8,15 @@ import retrofit2.http.*
 interface RetrofitService {
 
     @POST("user/signup/")
-    @FormUrlEncoded
     fun register(
-        @Field("username") username: String,
-        @Field("password") password: String
-    ): Call<User>
+        @Body signup: Signup
+    ): Call<String>
 
 
-    @POST("user/login/")
+    @POST("user/signin/")
     @FormUrlEncoded
     fun login(
-        @Field("username") username: String,
+        @Field("email") email: String,
         @Field("password") password: String
     ): Call<User>
 

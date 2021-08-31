@@ -109,7 +109,7 @@ class TimerActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         Toast.makeText(this@TimerActivity, "저장되었습니다.", Toast.LENGTH_LONG).show()
                     } else {
-                        Toast.makeText(this@TimerActivity, strtime, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@TimerActivity, "저장 실패", Toast.LENGTH_LONG).show()
                     }
                 }
 
