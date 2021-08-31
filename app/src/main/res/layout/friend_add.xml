@@ -22,7 +22,7 @@
 
         <EditText
             android:id="@+id/friend_search_input"
-            android:layout_width="250dp"
+            android:layout_width="230dp"
             android:hint="추가할 닉네임을 입력하세요"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp" />
@@ -38,21 +38,36 @@
 
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_height="wrap_content"
+            android:text="닉네임"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_height="wrap_content"
+            android:text="이메일"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="#D3D3D3" />
+        android:background="@color/gray" />
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="450dp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:fillViewport="true">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/friend_add_recyclerView"
             android:layout_width="match_parent"
@@ -60,7 +75,31 @@
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/checked_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="선택한 유저 이름"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/checked_user_email"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_height="30dp"
+            android:text="선택한 유저 이메일"
+            android:gravity="center"/>
+    </LinearLayout>
 
 
 

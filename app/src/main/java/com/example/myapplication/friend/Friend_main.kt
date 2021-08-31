@@ -17,6 +17,7 @@ import com.example.myapplication.friend.*
 import com.example.myapplication.todo.Todo_main
 
 import kotlinx.android.synthetic.main.activity_todo_main.*
+import kotlinx.android.synthetic.main.friend_add.*
 import kotlinx.android.synthetic.main.friend_list_item.*
 import kotlinx.android.synthetic.main.friend_main.*
 import retrofit2.Call
@@ -57,14 +58,21 @@ class Friend_main : AppCompatActivity() {
 
         val friendListview: friendListView = friendListView()
 
+        // 리싸이클러뷰 어댑터 설정
+        val mAdapter= ViewAdapter(friendListview)
+        val manager = LinearLayoutManager(this)
+        manager.reverseLayout = false
+        manager.stackFromEnd = false
+        friend_list_recyclerView.layoutManager = manager
+
+
         // 친구 목록 데이터 받기
         api.get2_users().enqueue(object : Callback<CheckGetModel2> {
             override fun onResponse(call: Call<CheckGetModel2>, response: Response<CheckGetModel2>) {
                 Log.d("log", response.toString())
 
-                // <받은 유저정보 -닉네임, 달성률, 누적시간- 리사이클러뷰로 보이기>
+                // 받은 유저정보 -닉네임, 달성률, 누적시간- 리사이클러뷰로 보이기
                 if(response.isSuccessful){
-                    // 리스트로 출력이 안됨, 로그는 찍힘
                     for(i in response.body()!!.checkRoomList2.indices){
                         val name= response.body()!!.checkRoomList2[i].username
                         val achievementRate= response.body()!!.checkRoomList2[i].achievementRate
@@ -83,6 +91,8 @@ class Friend_main : AppCompatActivity() {
                         )
                     }
                 }
+
+                friend_list_recyclerView.adapter = mAdapter
             }
             override fun onFailure(call: Call<CheckGetModel2>, t: Throwable) {
                 // 실패
@@ -92,12 +102,7 @@ class Friend_main : AppCompatActivity() {
         })
 
 
-        // 리싸이클러뷰 어댑터 설정
-        friend_list_recyclerView.adapter = ViewAdapter(friendListview)
-        val manager = LinearLayoutManager(this)
-        manager.reverseLayout = false
-        manager.stackFromEnd = false
-        friend_list_recyclerView.layoutManager = manager
+
 
     }
 

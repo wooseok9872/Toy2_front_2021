@@ -8,6 +8,8 @@
         android:id="@+id/mRootView"
         android:background="?attr/selectableItemBackground"
         android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_height="70dp"
         android:orientation="horizontal">
 

@@ -8,12 +8,9 @@ data class DeleteModel(
     var code : Int,
     var message: String
 )
-class CheckDeleteModel(
-    val checkRoomList3 : List<DeleteModel>
-)
 
 
-// 친구 검색
+// 친구 검색 (완료)
 data class GetModel(
     var userId : Long,
     var username: String,
@@ -24,7 +21,7 @@ class CheckGetModel(
     val checkRoomList : List<GetModel>
 )
 
-// 친구 목록
+// 친구 목록 (완료)
 data class GetModel2(
     var userId : Long,
     var username: String,
@@ -43,7 +40,4 @@ class CheckGetModel2(
 data class PostModel(
     var code : Int,
     var message: String
-)
-class CheckPostModel(
-    val checkRoomList4 : List<PostModel>
 )
