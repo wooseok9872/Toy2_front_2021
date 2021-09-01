@@ -73,15 +73,13 @@ class TimerActivity : AppCompatActivity() {
 
             (application as MasterApplication).service.status("true").enqueue(object : Callback<Timer> {
                 override fun onResponse(call: Call<Timer>, response: Response<Timer>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(this@TimerActivity, "변경되었습니다.", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(this@TimerActivity, "오류", Toast.LENGTH_LONG).show()
+                    if (!response.isSuccessful) {
+                        Toast.makeText(this@TimerActivity, "상태 오류", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<Timer>, t: Throwable) {
-                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_SHORT).show()
                 }
             })
         }
@@ -90,7 +88,7 @@ class TimerActivity : AppCompatActivity() {
             it.visibility = View.GONE
             btn_start.visibility = View.VISIBLE
             count++
-            recordView.text = recordView.text.toString()+ count.toString()+"회차: " + time.text.toString() + "\n"
+            recordView.text = recordView.text.toString()+ count.toString()+"회차 - " + time.text.toString() + "\n"
             time.text = ""
             timeAll += timeValue
             timeValue = 0
@@ -107,28 +105,26 @@ class TimerActivity : AppCompatActivity() {
             (application as MasterApplication).service.timer(timer).enqueue(object : Callback<Timer> {
                 override fun onResponse(call: Call<Timer>, response: Response<Timer>) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@TimerActivity, "저장되었습니다.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@TimerActivity, "저장되었습니다.", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this@TimerActivity, "저장 실패", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@TimerActivity, "저장 오류", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<Timer>, t: Throwable) {
-                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_SHORT).show()
                 }
             })
 
             (application as MasterApplication).service.status("false").enqueue(object : Callback<Timer> {
                 override fun onResponse(call: Call<Timer>, response: Response<Timer>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(this@TimerActivity, "변경되었습니다.", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(this@TimerActivity, "오류", Toast.LENGTH_LONG).show()
+                    if (!response.isSuccessful) {
+                        Toast.makeText(this@TimerActivity, "상태 오류", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<Timer>, t: Throwable) {
-                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@TimerActivity, "서버 오류", Toast.LENGTH_SHORT).show()
                 }
             })
         }
