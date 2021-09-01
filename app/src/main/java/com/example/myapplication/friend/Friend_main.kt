@@ -31,12 +31,12 @@ class Friend_main : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.friend_main)
 
-        val friend_add_button: ImageView = findViewById(R.id.friend_add_button) as ImageView
+        val friend_add_button: ImageView = findViewById<ImageView>(R.id.friend_add_button)
 
-        val todolist_button: ImageView = findViewById(R.id.todolist_button) as ImageView
-        val home_button: ImageView = findViewById(R.id.home_button) as ImageView
+        val todolist_button: ImageView = findViewById<ImageView>(R.id.todolist_button)
+        val home_button: ImageView = findViewById<ImageView>(R.id.home_button)
 
-        val friendList: friendList = friendList()
+        var userid : Long = 401
 
         //친구 추가 버튼 누르면 추가화면으로 이동
         friend_add_button.setOnClickListener {
@@ -56,7 +56,11 @@ class Friend_main : AppCompatActivity() {
         }
 
 
+
+
         val friendListview: friendListView = friendListView()
+
+
 
         // 리싸이클러뷰 어댑터 설정
         val mAdapter= ViewAdapter(friendListview)
@@ -64,6 +68,46 @@ class Friend_main : AppCompatActivity() {
         manager.reverseLayout = false
         manager.stackFromEnd = false
         friend_list_recyclerView.layoutManager = manager
+
+        friend_list_recyclerView.adapter = mAdapter
+
+
+        mAdapter.setItemClickListener(object : ViewAdapter.ItemClickListener {
+
+            override fun onClick(view:View, position: Int) {
+
+
+                // 선택한 친구 목록 삭제
+                api.delete_users(userid).enqueue(object : Callback<DeleteModel> {
+                    override fun onResponse(call: Call<DeleteModel>, response: Response<DeleteModel>) {
+                        Log.d("log", response.toString())
+
+                        if(response.body()!!.code == 200){
+                            Toast.makeText(this@Friend_main, "삭제되었습니다", Toast.LENGTH_LONG).show()
+
+                            // 리사이클러뷰 설정
+                            friend_list_recyclerView.adapter = mAdapter
+
+                        }
+                        else if(response.body()!!.code == 400){
+                            Toast.makeText(this@Friend_main, response.body()!!.message, Toast.LENGTH_LONG).show()
+                        }
+
+
+                    }
+                    override fun onFailure(call: Call<DeleteModel>, t: Throwable) {
+                        // 실패
+                        Log.d("log",t.message.toString())
+                        Log.d("log","fail")
+                    }
+                })
+
+            }
+        })
+
+
+        // 리사이클러뷰 설정
+        friend_list_recyclerView.adapter = mAdapter
 
 
         // 친구 목록 데이터 받기
@@ -74,24 +118,33 @@ class Friend_main : AppCompatActivity() {
                 // 받은 유저정보 -닉네임, 달성률, 누적시간- 리사이클러뷰로 보이기
                 if(response.isSuccessful){
                     for(i in response.body()!!.checkRoomList2.indices){
+                        userid = response.body()!!.checkRoomList2[i].userId
                         val name= response.body()!!.checkRoomList2[i].username
                         val achievementRate= response.body()!!.checkRoomList2[i].achievementRate
                         val accumulatedTime= response.body()!!.checkRoomList2[i].accumulatedTime
+                        val studyStatus= response.body()!!.checkRoomList2[i].studyStatus
+
                         Log.d("log", name)
                         Log.d("log", achievementRate.toString())
                         Log.d("log", accumulatedTime)
 
+
                         // 리스트에 추가
                         friendListview.viewFriend(
                             friendview(
+                                userid,
                                 name,
                                 achievementRate,
-                                accumulatedTime
+                                accumulatedTime,
+                                studyStatus
                             )
                         )
+
+
                     }
                 }
 
+                // 리사이클러뷰 설정
                 friend_list_recyclerView.adapter = mAdapter
             }
             override fun onFailure(call: Call<CheckGetModel2>, t: Throwable) {
@@ -110,18 +163,21 @@ class Friend_main : AppCompatActivity() {
         val friend_List: friendListView
     ) : RecyclerView.Adapter<ViewAdapter.ViewHolder>() {
 
+        private lateinit var itemClickListner: ItemClickListener
+
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val friend_name: TextView
             val friend_achievement_rate: TextView
             val friend_Cumulative_time: TextView
-            //var friend_delete: ImageView
+            var friend_delete: ImageView
+            var logo_icon: ImageView
 
             init {
                 friend_name = itemView.findViewById(R.id.friend_name)
                 friend_achievement_rate = itemView.findViewById(R.id.friend_achievement_rate)
                 friend_Cumulative_time = itemView.findViewById(R.id.friend_Cumulative_time)
-                //friend_delete = itemView.findViewById(R.id.friend_delete)
-
+                friend_delete = itemView.findViewById(R.id.friend_delete)
+                logo_icon = itemView.findViewById(R.id.logo_icon)
             }
         }
 
@@ -134,6 +190,14 @@ class Friend_main : AppCompatActivity() {
             return friend_List.FriendListview.size
         }
 
+        // 리사이클러뷰 아이템클릭 리스너
+        interface ItemClickListener {
+            fun onClick(view: View, position: Int)
+        }
+        fun setItemClickListener(itemClickListener:ItemClickListener) {
+            this.itemClickListner = itemClickListener
+        }
+
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
             val friend = friend_List.FriendListview[position]
@@ -141,6 +205,22 @@ class Friend_main : AppCompatActivity() {
             holder.friend_name.text = friend.name
             holder.friend_achievement_rate.text = friend.achievementRate.toString()
             holder.friend_Cumulative_time.text = friend.accumulatedTime
+
+            // 공부중 상태 확인
+            if(friend.studyStatus){ //true - 공부중
+                holder.friend_Cumulative_time.visibility = View.INVISIBLE
+                holder.logo_icon.visibility = View.VISIBLE
+            }
+            else{ // false - 공부중 아님
+                holder.friend_Cumulative_time.visibility = View.VISIBLE
+                holder.logo_icon.visibility = View.INVISIBLE
+            }
+
+
+            // 리사이클러뷰 아이템클릭 리스너
+            holder.friend_delete.setOnClickListener {
+                itemClickListner.onClick(it, position)
+            }
 
 
         }

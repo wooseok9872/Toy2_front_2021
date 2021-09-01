@@ -44,11 +44,19 @@
         <TextView
             android:id="@+id/friend_Cumulative_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="21dp"
             android:layout_gravity="center"
             android:text="(누적시간)"
             android:textColor="@color/black"
             android:textSize="@dimen/friend_add_list_size2" />
+
+        <ImageView
+            android:id="@+id/logo_icon"
+            android:layout_width="25dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_height="25dp"
+            android:src="@drawable/icon" />
 
     </LinearLayout>
 

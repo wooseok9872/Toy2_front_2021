@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.friend.*
 import kotlinx.android.synthetic.main.friend_add.*
 import kotlinx.android.synthetic.main.friend_add_list_item.view.*
+import kotlinx.android.synthetic.main.friend_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,11 +38,11 @@ class Friend_add : AppCompatActivity() {
 
         val checked_user_name = findViewById<View>(R.id.checked_user_name) as TextView
         val checked_user_email = findViewById<View>(R.id.checked_user_email)as TextView
-        checked_user_name.visibility = View.VISIBLE
-        checked_user_email.visibility = View.VISIBLE
+
 
         val friendaddlist: friendaddList = friendaddList()
 
+        var userId: Long = 401
 
         // 리싸이클러뷰 어댑터 설정
         val mAdapter=Friend_Adapter(friendaddlist)
@@ -55,6 +56,8 @@ class Friend_add : AppCompatActivity() {
                 // 선택한 유저 닉네임, 이메일 표시
                 val name: String = friendaddlist.FriendaddList[position].name
                 val email: String = friendaddlist.FriendaddList[position].email
+                userId = friendaddlist.FriendaddList[position].userId
+
                 checked_user_name.text = name
                 checked_user_email.text = email
             }
@@ -62,7 +65,8 @@ class Friend_add : AppCompatActivity() {
 
 
 
-        // 추가할 친구 검색 기능 구현
+
+        // 친구 검색 기능 구현
         friend_search_button.setOnClickListener {
             // 리스트 초기화 할 필요 있음
             friendaddlist.FriendaddList.clear()
@@ -74,6 +78,7 @@ class Friend_add : AppCompatActivity() {
                     // 받은 유저정보 -닉네임, 이메일- 리사이클러뷰로 보이기
                     if(response.isSuccessful){
                         for(i in response.body()!!.checkRoomList.indices){
+                            val userid = response.body()!!.checkRoomList[i].userId
                             val name= response.body()!!.checkRoomList[i].username
                             val email= response.body()!!.checkRoomList[i].email
                             Log.d("log", name)
@@ -82,6 +87,7 @@ class Friend_add : AppCompatActivity() {
                             // 리스트에 추가
                             friendaddlist.addFriend(
                                 addlist(
+                                    userid,
                                     name,
                                     email
                                 )
@@ -108,14 +114,15 @@ class Friend_add : AppCompatActivity() {
 
         // 친구 추가 기능 구현
         friend_add_button.setOnClickListener {
-            api.post_users(checked_user_name.toString()).enqueue(object : Callback<PostModel> {
+            api.post_users(userId).enqueue(object : Callback<PostModel> {
                 override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
                     Log.d("log", response.toString())
-                    // 현재 code가 계속 400으로 뜸 (존재하지 않는 계정으로)!!!!!!
+
+                    Log.d("log", userId.toString())
                     Log.d("log", checked_user_name.toString())
                     Log.d("log", checked_user_email.toString())
 
-                    if(response.body()!!.code == 201){
+                    if(response.body()!!.code == 200){
                         Toast.makeText(this@Friend_add, response.body()!!.message, Toast.LENGTH_LONG).show()
 
                         finish()
@@ -126,8 +133,6 @@ class Friend_add : AppCompatActivity() {
                     else if(response.body()!!.code == 401){
                         Toast.makeText(this@Friend_add, response.body()!!.message, Toast.LENGTH_LONG).show()
                     }
-
-
 
                 }
                 override fun onFailure(call: Call<PostModel>, t: Throwable) {

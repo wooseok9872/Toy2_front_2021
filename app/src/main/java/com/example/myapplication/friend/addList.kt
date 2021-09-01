@@ -1,7 +1,7 @@
 package com.example.myapplication.friend
 
 //친구 검색
-class addlist(val name: String, val email: String){
+class addlist(val userId:Long, val name: String, val email: String){
 
 }
 class friendaddList() {
@@ -13,7 +13,7 @@ class friendaddList() {
 }
 
 //친구 목록 조회
-class friendview(val name: String, val achievementRate:Double, val accumulatedTime: String){
+class friendview(val userId: Long, val name: String, val achievementRate:Double, val accumulatedTime: String, val studyStatus:Boolean){
 
 }
 class friendListView() {
