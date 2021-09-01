@@ -24,9 +24,12 @@ interface RetrofitService {
         @Body timer: Timer
     ): Call<Timer>
 
-    @PUT("timer")
+    @PATCH("timer")
     fun status(
         @Query("status") status: String,
     ): Call<Timer>
+
+    @GET("timer")
+    fun gettime(): Call<Timer>
 
 }
