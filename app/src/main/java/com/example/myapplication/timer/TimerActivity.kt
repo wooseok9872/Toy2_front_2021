@@ -30,9 +30,7 @@ class TimerActivity : AppCompatActivity() {
         var format = SimpleDateFormat("yyyy.MM.dd")
         var todayDate = format.format(date)
         var strtime = "00:00:00"
-
-        val sp = getSharedPreferences("data", Context.MODE_PRIVATE)
-        val editor = sp.edit()
+        
         today.text = todayDate
         btn_stop.visibility = View.GONE
 
