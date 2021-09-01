@@ -15,26 +15,19 @@
         android:usesCleartextTraffic="true">
 
         <activity android:name=".IntroActivity">
-
-        </activity>
-        <activity android:name=".SignupActivity" >
-
-        </activity>
-        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MypageActivity" />
         <activity android:name=".Friend_add"/>
         <activity android:name=".BottomNavigation"/>
-        <activity android:name=".TimerActivity" >
-
-        </activity>
+        <activity android:name=".TimerActivity" />
         <activity android:name=".todo.Todo_main" />
-
 
     </application>
 

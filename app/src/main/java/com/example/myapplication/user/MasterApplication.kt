@@ -29,7 +29,7 @@ class MasterApplication : Application() {
             if (checkIsLogin()) {
                 getUserToken()?.let { token ->
                     val requeset = original.newBuilder()
-                        .header("Authorization", "token " + token)
+                        .header("X-AUTH-TOKEN", token)
                         .build()
                     it.proceed(requeset)
                 }
