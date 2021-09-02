@@ -30,7 +30,7 @@ class TimerActivity : AppCompatActivity() {
         var format = SimpleDateFormat("yyyy.MM.dd")
         var todayDate = format.format(date)
         var strtime = "00:00:00"
-        
+
         today.text = todayDate
         btn_stop.visibility = View.GONE
 
