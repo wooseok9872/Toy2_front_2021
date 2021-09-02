@@ -73,7 +73,7 @@ class Friend_add : AppCompatActivity() {
             // 리스트 초기화 할 필요 있음
             friendaddlist.FriendaddList.clear()
 
-            api.get_users(friend_search_input.text.toString()).enqueue(object : Callback<CheckGetModel> {
+            (application as MasterApplication).api.get_users(friend_search_input.text.toString()).enqueue(object : Callback<CheckGetModel> {
                 override fun onResponse(call: Call<CheckGetModel>, response: Response<CheckGetModel>) {
                     Log.d("log", response.toString())
 
@@ -116,7 +116,7 @@ class Friend_add : AppCompatActivity() {
 
         // 친구 추가 기능 구현
         friend_add_button.setOnClickListener {
-            api.post_users(userId).enqueue(object : Callback<PostModel> {
+            (application as MasterApplication).api.post_users(userId).enqueue(object : Callback<PostModel> {
                 override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
                     Log.d("log", response.toString())
 

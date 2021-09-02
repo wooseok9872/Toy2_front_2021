@@ -54,7 +54,10 @@ class TimerActivity : AppCompatActivity() {
         (application as MasterApplication).service.gettime().enqueue(object : Callback<Timer> {
             override fun onResponse(call: Call<Timer>, response: Response<Timer>) {
                 val timer = response.body()
-                val time = timer!!.time!!
+                var time = "00:00:00"
+                if(timer != null) {
+                    time = timer.time.toString()
+                }
                 all_time.text = time
             }
 
@@ -145,8 +148,6 @@ class TimerActivity : AppCompatActivity() {
                 }
             })
         }
-
-        mypage.setOnClickListener { startActivity(Intent(this@TimerActivity, MypageActivity::class.java)) }
     }
 
     private fun timeToText(time: Int = 0) : String{
