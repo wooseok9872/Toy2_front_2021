@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.friend.*
+import com.example.myapplication.todo.Todo_main
 import kotlinx.android.synthetic.main.friend_add.*
 import kotlinx.android.synthetic.main.friend_add_list_item.view.*
 import kotlinx.android.synthetic.main.friend_main.*
@@ -20,8 +22,6 @@ import retrofit2.Response
 
 class Friend_add : AppCompatActivity() {
     val api = APIS.create()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +66,16 @@ class Friend_add : AppCompatActivity() {
         })
 
 
+        //todo list 화면으로 이동
+        todolist_button.setOnClickListener{
+            startActivity(Intent(this, Todo_main::class.java))
+            finish()
+        }
+        //친구 화면으로 이동
+        friend_button.setOnClickListener{
+            startActivity(Intent(this, Friend_main::class.java))
+            finish()
+        }
 
 
         // 친구 검색 기능 구현

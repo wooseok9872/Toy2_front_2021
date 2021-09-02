@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.app.Application
 import android.content.Context
 import com.example.myapplication.friend.APIS
+import com.example.myapplication.todo.APIS_todo
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.Interceptor
@@ -15,6 +16,7 @@ class MasterApplication : Application() {
 
     lateinit var service: RetrofitService
     lateinit var api: APIS
+    lateinit var api_todo: APIS_todo
 
     override fun onCreate() {
         super.onCreate()
@@ -55,6 +57,7 @@ class MasterApplication : Application() {
 
         service = retrofit.create(RetrofitService::class.java)
         api = retrofit.create(APIS::class.java)
+        api_todo = retrofit.create(APIS_todo::class.java)
     }
 
     fun checkIsLogin(): Boolean {
