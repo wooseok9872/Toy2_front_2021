@@ -60,6 +60,8 @@ class Friend_add : AppCompatActivity() {
 
                 checked_user_name.text = name
                 checked_user_email.text = email
+
+                friend_add_recyclerView.layoutManager = manager
             }
         })
 
@@ -141,6 +143,8 @@ class Friend_add : AppCompatActivity() {
                     Log.d("log","fail")
                 }
             })
+
+
 
             finish()
         }

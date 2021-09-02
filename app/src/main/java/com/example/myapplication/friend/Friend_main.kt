@@ -72,10 +72,13 @@ class Friend_main : AppCompatActivity() {
         friend_list_recyclerView.adapter = mAdapter
 
 
+
+
         mAdapter.setItemClickListener(object : ViewAdapter.ItemClickListener {
 
             override fun onClick(view:View, position: Int) {
 
+                userid = friendListview.FriendListview[position].userId
 
                 // 선택한 친구 목록 삭제
                 api.delete_users(userid).enqueue(object : Callback<DeleteModel> {
@@ -85,7 +88,10 @@ class Friend_main : AppCompatActivity() {
                         if(response.body()!!.code == 200){
                             Toast.makeText(this@Friend_main, "삭제되었습니다", Toast.LENGTH_LONG).show()
 
-                            // 리사이클러뷰 설정
+                            // 리싸이클러뷰 어댑터 설정
+                            manager.reverseLayout = false
+                            manager.stackFromEnd = false
+                            friend_list_recyclerView.layoutManager = manager
                             friend_list_recyclerView.adapter = mAdapter
 
                         }
@@ -156,6 +162,10 @@ class Friend_main : AppCompatActivity() {
 
 
 
+
+    }
+
+    fun onStart(savedInstanceState: Bundle?) {
 
     }
 
