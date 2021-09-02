@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,11 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.friend.*
 import com.example.myapplication.todo.Todo_main
-
-import kotlinx.android.synthetic.main.activity_todo_main.*
-import kotlinx.android.synthetic.main.friend_add.*
-import kotlinx.android.synthetic.main.friend_list_item.*
 import kotlinx.android.synthetic.main.friend_main.*
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,9 +28,6 @@ class Friend_main : AppCompatActivity() {
         setContentView(R.layout.friend_main)
 
         val friend_add_button: ImageView = findViewById<ImageView>(R.id.friend_add_button)
-
-        val todolist_button: ImageView = findViewById<ImageView>(R.id.todolist_button)
-        val home_button: ImageView = findViewById<ImageView>(R.id.home_button)
 
         var userid : Long = 401
 
@@ -56,11 +49,7 @@ class Friend_main : AppCompatActivity() {
         }
 
 
-
-
         val friendListview: friendListView = friendListView()
-
-
 
         // 리싸이클러뷰 어댑터 설정
         val mAdapter= ViewAdapter(friendListview)

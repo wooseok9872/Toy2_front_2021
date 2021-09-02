@@ -90,36 +90,30 @@ class Todo_main : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.add_dialong_view, null)
             val dialogtext = dialogView.findViewById<EditText>(R.id.edit_content)
-            var text = "test"
 
             builder.setView(dialogView)
                 .setPositiveButton("add") { dialogInterface, i ->
-                    text = dialogtext.text.toString()
-                    planList.addPlan(
-                        plan(
-                            text
-                        )
-                    )
+                    val text = dialogtext.text.toString()
+                    planList.addPlan(plan(text))
+
+                    val params = todo_class(text)
+                    (application as MasterApplication).api_todo.post_todo(params).enqueue(object : Callback<Post_Todo> {
+                        override fun onResponse(call: Call<Post_Todo>, response: Response<Post_Todo>) {
+                            if (response.isSuccessful) {
+                                val planee = response.body()
+                                Log.d("loggg", "post" + planee?.content)
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Post_Todo>, t: Throwable) {
+                            Log.d("loggg", t.message.toString())
+                            Log.d("loggg", "post_fail")
+                        }
+                    })
                 }
                 .setNegativeButton("cancel") { dialogInterface, i ->
                 }
                 .show()
-
-
-            val params = todo_class(text)
-            (application as MasterApplication).api_todo.post_todo(params).enqueue(object : Callback<Post_Todo> {
-                override fun onResponse(call: Call<Post_Todo>, response: Response<Post_Todo>) {
-                    if (response.isSuccessful) {
-                        val planee = response.body()
-                        Log.d("loggg", "post" + planee?.content)
-                    }
-                }
-
-                override fun onFailure(call: Call<Post_Todo>, t: Throwable) {
-                    Log.d("loggg", t.message.toString())
-                    Log.d("loggg", "post_fail")
-                }
-            })
         }
     }
 

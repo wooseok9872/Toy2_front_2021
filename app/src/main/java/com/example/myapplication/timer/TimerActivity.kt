@@ -28,8 +28,6 @@ class TimerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
 
-        val todolist_button: ImageView = findViewById(R.id.todolist_button) as ImageView
-        val friend_button: ImageView = findViewById(R.id.friend_button) as ImageView
         //todo list 화면으로 이동
         todolist_button.setOnClickListener{
             startActivity(Intent(this, Todo_main::class.java))
