@@ -25,7 +25,7 @@ interface APIS_todo {
     @PATCH("study/{studyId}")
     fun patch_todo(@Path("studyId") studyId: Long): Call<Patch_Todo>
 
-    @PUT("/study/{studyId}?status=true")
+    @PUT("/study/{studyId}")
     fun put_todo(@Path("studyId") studyId: Long): Call<Put_Todo>
 
     @DELETE("/study/{studyId}")
