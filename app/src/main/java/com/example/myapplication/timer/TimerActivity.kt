@@ -10,6 +10,7 @@ import android.widget.Toast
 import android.widget.ImageView
 import com.example.myapplication.todo.Todo_main
 import kotlinx.android.synthetic.main.activity_timer.*
+import kotlinx.android.synthetic.main.activity_timer.logout
 import java.text.SimpleDateFormat
 import java.util.*
 import retrofit2.Call
@@ -40,7 +41,16 @@ class TimerActivity : AppCompatActivity() {
             finish()
         }
 
-
+        logout.setOnClickListener {
+            val sp = getSharedPreferences("login_sp", Context.MODE_PRIVATE)
+            val editor = sp.edit()
+            editor.putString("email", "null")
+            editor.putString("token", "null")
+            editor.commit()
+            (application as MasterApplication).createRetrofit()
+            finish()
+            startActivity(Intent(this, IntroActivity::class.java))
+        }
 
         var now = System.currentTimeMillis()
         var date = Date(now)
