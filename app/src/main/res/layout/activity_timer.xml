@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="오늘의 누적 공부량"
+                android:fontFamily="@font/font"
                 android:textSize="15dp"
                 android:textColor="#ffffff" />
 
@@ -36,6 +37,7 @@
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:text="00:00:00"
+                android:fontFamily="@font/font"
                 android:textColor="#ffffff" />
         </LinearLayout>
         <LinearLayout
@@ -52,6 +54,7 @@
                 android:layout_gravity="center"
                 android:textSize="25dp"
                 android:text="0000.00.00"
+                android:fontFamily="@font/font"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -62,6 +65,7 @@
                 android:textSize="50dp"
                 android:textStyle="bold"
                 android:text="00:00:00"
+                android:fontFamily="@font/font"
                 android:textColor="#ffffff" />
 
             <RelativeLayout
@@ -88,15 +92,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="기록"
+        android:fontFamily="@font/font"
         android:textColor="@color/myBlack"
         android:textSize="22dp" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="3dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
@@ -106,7 +111,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="260dp">
         <TextView
             android:id="@+id/recordView"
             android:layout_width="wrap_content"
@@ -114,9 +119,29 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:text=""
+            android:fontFamily="@font/font"
             android:textColor="@color/myBlack"
             android:textSize="22dp" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/mypage"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_button"
+        android:textColor="#ffffff"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="32dp"
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:paddingRight="32dp"
+        android:paddingBottom="16dp"
+        android:text="마이페이지"
+        android:fontFamily="@font/font"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_marginTop="-60dp"
         android:layout_width="match_parent"

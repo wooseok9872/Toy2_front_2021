@@ -29,7 +29,7 @@ class MasterApplication : Application() {
             if (checkIsLogin()) {
                 getUserToken()?.let { token ->
                     val requeset = original.newBuilder()
-                        .header("Authorization", "token " + token)
+                        .header("X-AUTH-TOKEN", token)
                         .build()
                     it.proceed(requeset)
                 }
@@ -43,8 +43,10 @@ class MasterApplication : Application() {
             .addNetworkInterceptor(StethoInterceptor())
             .build()
 
+//        "http://180.230.121.23/"
+//        "http://10.0.2.2:8000/"
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://lookie.pythonanywhere.com/")
+            .baseUrl("http://180.230.121.23/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
