@@ -81,7 +81,7 @@ class Friend_main : AppCompatActivity() {
                 userid = friendListview.FriendListview[position].userId
 
                 // 선택한 친구 목록 삭제
-                api.delete_users(userid).enqueue(object : Callback<DeleteModel> {
+                (application as MasterApplication).api.delete_users(userid).enqueue(object : Callback<DeleteModel> {
                     override fun onResponse(call: Call<DeleteModel>, response: Response<DeleteModel>) {
                         Log.d("log", response.toString())
 
@@ -117,7 +117,7 @@ class Friend_main : AppCompatActivity() {
 
 
         // 친구 목록 데이터 받기
-        api.get2_users().enqueue(object : Callback<CheckGetModel2> {
+        (application as MasterApplication).api.get2_users().enqueue(object : Callback<CheckGetModel2> {
             override fun onResponse(call: Call<CheckGetModel2>, response: Response<CheckGetModel2>) {
                 Log.d("log", response.toString())
 

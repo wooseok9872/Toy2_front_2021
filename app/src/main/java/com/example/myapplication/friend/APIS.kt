@@ -1,5 +1,6 @@
 package com.example.myapplication.friend
 
+import com.example.myapplication.RetrofitService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
@@ -10,7 +11,7 @@ import retrofit2.http.*
 
 
 
-interface APIS {
+interface APIS : RetrofitService {
 
     // 친구 추가 기능
     @POST("follow/{memberId}")

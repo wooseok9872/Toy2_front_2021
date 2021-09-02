@@ -28,7 +28,6 @@
         <activity android:name=".Friend_add" />
         <activity android:name=".Friend_main" />
         <activity android:name=".todo.Todo_main"/>
-        <activity android:name=".BottomNavigation"/>
 
     </application>
 
