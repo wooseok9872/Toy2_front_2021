@@ -47,6 +47,7 @@ class Todo_main : AppCompatActivity() {
             startActivity(Intent(this, TimerActivity::class.java))
             finish()
         }
+
         //친구 화면으로 이동
         friend_button.setOnClickListener{
             startActivity(Intent(this, Friend_main::class.java))
@@ -89,11 +90,11 @@ class Todo_main : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.add_dialong_view, null)
             val dialogtext = dialogView.findViewById<EditText>(R.id.edit_content)
-
+            var text = "test"
 
             builder.setView(dialogView)
                 .setPositiveButton("add") { dialogInterface, i ->
-                    var text = dialogtext.text.toString()
+                    text = dialogtext.text.toString()
                     planList.addPlan(
                         plan(
                             text
@@ -104,8 +105,8 @@ class Todo_main : AppCompatActivity() {
                 }
                 .show()
 
-            val size = planList.Planlist.size
-            val params = todo_class(planList.Planlist[size-1].toString())
+
+            val params = todo_class(text)
             (application as MasterApplication).api_todo.post_todo(params).enqueue(object : Callback<Post_Todo> {
                 override fun onResponse(call: Call<Post_Todo>, response: Response<Post_Todo>) {
                     if (response.isSuccessful) {

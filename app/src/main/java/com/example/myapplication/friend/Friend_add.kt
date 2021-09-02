@@ -65,19 +65,6 @@ class Friend_add : AppCompatActivity() {
             }
         })
 
-
-        //todo list 화면으로 이동
-        todolist_button.setOnClickListener{
-            startActivity(Intent(this, Todo_main::class.java))
-            finish()
-        }
-        //친구 화면으로 이동
-        friend_button.setOnClickListener{
-            startActivity(Intent(this, Friend_main::class.java))
-            finish()
-        }
-
-
         // 친구 검색 기능 구현
         friend_search_button.setOnClickListener {
             // 리스트 초기화 할 필요 있음
