@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true">
 
         <activity android:name=".IntroActivity">
-            <intent-filter>
+          <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,10 +24,11 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MypageActivity" />
-        <activity android:name=".Friend_add"/>
-        <activity android:name=".BottomNavigation"/>
         <activity android:name=".TimerActivity" />
-        <activity android:name=".todo.Todo_main" />
+        <activity android:name=".Friend_add" />
+        <activity android:name=".Friend_main" />
+        <activity android:name=".todo.Todo_main"/>
+        <activity android:name=".BottomNavigation"/>
 
     </application>
 

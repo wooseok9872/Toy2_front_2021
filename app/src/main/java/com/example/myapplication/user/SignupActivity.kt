@@ -58,6 +58,7 @@ class SignupActivity : AppCompatActivity() {
                                 Toast.makeText(activity, "서버 오류", Toast.LENGTH_SHORT).show()
                             }
                         })
+
                     } else {
                         Toast.makeText(activity, "사용할 수 없는 이메일입니다.", Toast.LENGTH_LONG).show()
                     }

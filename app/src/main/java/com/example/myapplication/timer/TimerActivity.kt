@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Toast
+import android.widget.ImageView
+import com.example.myapplication.todo.Todo_main
 import kotlinx.android.synthetic.main.activity_timer.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +26,21 @@ class TimerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
+
+        val todolist_button: ImageView = findViewById(R.id.todolist_button) as ImageView
+        val friend_button: ImageView = findViewById(R.id.friend_button) as ImageView
+        //todo list 화면으로 이동
+        todolist_button.setOnClickListener{
+            startActivity(Intent(this, Todo_main::class.java))
+            finish()
+        }
+        //친구 화면으로 이동
+        friend_button.setOnClickListener{
+            startActivity(Intent(this, Friend_main::class.java))
+            finish()
+        }
+
+
 
         var now = System.currentTimeMillis()
         var date = Date(now)
