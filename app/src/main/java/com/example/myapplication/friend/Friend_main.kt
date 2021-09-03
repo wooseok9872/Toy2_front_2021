@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.friend.*
 import com.example.myapplication.todo.Todo_main
-import kotlinx.android.synthetic.main.activity_todo_main.*
 import kotlinx.android.synthetic.main.friend_add.*
 import kotlinx.android.synthetic.main.friend_list_item.*
 import kotlinx.android.synthetic.main.friend_main.*
