@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.friend.*
+import com.example.myapplication.todo.Todo_main
 import kotlinx.android.synthetic.main.friend_add.*
 import kotlinx.android.synthetic.main.friend_add_list_item.view.*
 import kotlinx.android.synthetic.main.friend_main.*
@@ -20,8 +22,6 @@ import retrofit2.Response
 
 class Friend_add : AppCompatActivity() {
     val api = APIS.create()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,15 +65,12 @@ class Friend_add : AppCompatActivity() {
             }
         })
 
-
-
-
         // 친구 검색 기능 구현
         friend_search_button.setOnClickListener {
             // 리스트 초기화 할 필요 있음
             friendaddlist.FriendaddList.clear()
 
-            api.get_users(friend_search_input.text.toString()).enqueue(object : Callback<CheckGetModel> {
+            (application as MasterApplication).api.get_users(friend_search_input.text.toString()).enqueue(object : Callback<CheckGetModel> {
                 override fun onResponse(call: Call<CheckGetModel>, response: Response<CheckGetModel>) {
                     Log.d("log", response.toString())
 
@@ -116,7 +113,7 @@ class Friend_add : AppCompatActivity() {
 
         // 친구 추가 기능 구현
         friend_add_button.setOnClickListener {
-            api.post_users(userId).enqueue(object : Callback<PostModel> {
+            (application as MasterApplication).api.post_users(userId).enqueue(object : Callback<PostModel> {
                 override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
                     Log.d("log", response.toString())
 

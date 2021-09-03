@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_todo_main.*
 import kotlinx.android.synthetic.main.friend_add.*
 import kotlinx.android.synthetic.main.friend_list_item.*
 import kotlinx.android.synthetic.main.friend_main.*
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,10 +39,6 @@ class Friend_main : AppCompatActivity() {
 
         val friend_add_button: ImageView = findViewById<ImageView>(R.id.friend_add_button)
 
-        val todolist_button: ImageView = findViewById<ImageView>(R.id.todolist_button)
-        val home_button: ImageView = findViewById<ImageView>(R.id.home_button)
-
-
         //친구 추가 버튼 누르면 추가화면으로 이동
         friend_add_button.setOnClickListener {
             val intent = Intent(this, Friend_add::class.java)
@@ -58,7 +55,6 @@ class Friend_main : AppCompatActivity() {
             startActivity(Intent(this, TimerActivity::class.java))
             finish()
         }
-
 
         // 리싸이클러뷰 어댑터 설정
         mAdapter= ViewAdapter(friendListview)
@@ -78,7 +74,7 @@ class Friend_main : AppCompatActivity() {
                 userid = friendListview.FriendListview[position].userId
 
                 // 선택한 친구 목록 삭제
-                api.delete_users(userid).enqueue(object : Callback<DeleteModel> {
+                (application as MasterApplication).api.delete_users(userid).enqueue(object : Callback<DeleteModel> {
                     override fun onResponse(call: Call<DeleteModel>, response: Response<DeleteModel>) {
                         Log.d("log", response.toString())
 
@@ -115,7 +111,7 @@ class Friend_main : AppCompatActivity() {
 
     fun List_Start() {
         // 친구 목록 데이터 받기
-        api.get2_users().enqueue(object : Callback<CheckGetModel2> {
+        (application as MasterApplication).api.get2_users().enqueue(object : Callback<CheckGetModel2> {
             override fun onResponse(call: Call<CheckGetModel2>, response: Response<CheckGetModel2>) {
                 Log.d("log", response.toString())
 
