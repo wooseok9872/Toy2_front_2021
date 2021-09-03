@@ -3,7 +3,9 @@ package com.example.myapplication.todo
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,12 +68,14 @@ class Todo_main : AppCompatActivity() {
                     for (i in response.body()!!.checkRoomList22.indices) {
                         val content = response.body()!!.checkRoomList22[i].content
                         val status = response.body()!!.checkRoomList22[i].status
+                        val studyId = response.body()!!.checkRoomList22[i].studyId
                         Log.d("loggg", content)
 
                         planList.addPlan(
                             plan(
                                 content,
-                                status
+                                status,
+                                studyId
                             )
                         )
                     }
@@ -84,7 +88,6 @@ class Todo_main : AppCompatActivity() {
                 Log.d("loggg", "get_fail")
             }
         })
-
 
         add_button.setOnClickListener {
             val builder = AlertDialog.Builder(this)
@@ -115,6 +118,35 @@ class Todo_main : AppCompatActivity() {
                 }
                 .show()
         }
-    }
 
+        mAdapter.setItemClickListener(object : planAdapter.PlanClickListener {
+            override fun onClick(view: View, position: Int) {
+                var studyid = planList.Planlist[position].studyId
+                var status = planList.Planlist[position].status.toString()
+                Log.d("state--", "click: " + status)
+
+                if (status=="true") {
+                    (application as MasterApplication).api_todo.put_todo(studyid, "false") .enqueue(object : Callback<Put_Todo> {
+                        override fun onResponse(call: Call<Put_Todo>, response: Response<Put_Todo>) {}
+
+                        override fun onFailure(call: Call<Put_Todo>, t: Throwable) {
+                            Toast.makeText(this@Todo_main, "서버 오류", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                } else {
+                    (application as MasterApplication).api_todo.put_todo(studyid, "true") .enqueue(object : Callback<Put_Todo> {
+                        override fun onResponse(call: Call<Put_Todo>, response: Response<Put_Todo>) {}
+
+                        override fun onFailure(call: Call<Put_Todo>, t: Throwable) {
+                            Toast.makeText(this@Todo_main, "서버 오류", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
+
+
+
+            }
+        })
+
+    }
 }
