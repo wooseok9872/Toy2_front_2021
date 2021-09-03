@@ -13,13 +13,11 @@ class IntroActivity : AppCompatActivity() {
         var handler = Handler()
         if ((application as MasterApplication).checkIsLogin()) {
             handler.postDelayed({
-                var intent = Intent(this, MypageActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this@IntroActivity, TimerActivity::class.java))
             }, 1000)
         } else {
             handler.postDelayed({
-                var intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this@IntroActivity, LoginActivity::class.java))
             }, 1000)
         }
     }

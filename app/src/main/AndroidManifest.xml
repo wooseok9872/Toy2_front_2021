@@ -13,18 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".IntroActivity">
-            <intent-filter>
+          <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".SignupActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".TimerActivity" />
+        <activity android:name=".Friend_add" />
+        <activity android:name=".Friend_main" />
+        <activity android:name=".todo.Todo_main"/>
 
-        </activity>
-        <activity android:name=".MypageActivity" />
     </application>
 
 </manifest>
