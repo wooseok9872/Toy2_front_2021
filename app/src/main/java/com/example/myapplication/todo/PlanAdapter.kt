@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,14 +15,18 @@ class planAdapter(
 ) : RecyclerView.Adapter<planAdapter.ViewHolder>() {
 
     private lateinit var planClickListner: PlanClickListener
+    private lateinit var todoClickListener: TodoClickListener
+
 
     inner class ViewHolder(todo_view: View) : RecyclerView.ViewHolder(todo_view) {
         val planContent: TextView
         val todoIsDone: CheckBox
+        val todoDelete: Button
 
         init {
             planContent = todo_view.findViewById(R.id.plan_content)
             todoIsDone = todo_view.findViewById(R.id.check_box)
+            todoDelete = todo_view.findViewById(R.id.delete_button)
         }
     }
 
@@ -31,9 +36,6 @@ class planAdapter(
     }
 
     override fun getItemCount(): Int {
-        val sum: Int = plan_list.Planlist.size
-        Log.d("sum", "" + sum)
-
         return plan_list.Planlist.size
     }
 
@@ -41,8 +43,17 @@ class planAdapter(
     interface PlanClickListener {
         fun onClick(view: View, position: Int)
     }
-    fun setItemClickListener(planClickListener:PlanClickListener) {
+
+    fun setItemClickListener(planClickListener: PlanClickListener) {
         this.planClickListner = planClickListener
+    }
+
+    interface TodoClickListener{
+        fun onClick(view: View, position: Int)
+    }
+
+    fun setTodoClickListener(todoClickListener: TodoClickListener) {
+        this.todoClickListener = todoClickListener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -51,7 +62,7 @@ class planAdapter(
 
         holder.planContent.text = todo.content
 
-        holder.todoIsDone.isChecked = plan_list.Planlist[position].status.toString()=="true"
+        holder.todoIsDone.isChecked = plan_list.Planlist[position].status.toString() == "true"
 
 
         holder.todoIsDone.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -64,6 +75,10 @@ class planAdapter(
                 Log.d("state--", "" + cnt)
             }
 
+        }
+
+        holder.todoDelete.setOnClickListener() {
+            todoClickListener.onClick(it, position)
         }
 
         // 리사이클러뷰 아이템클릭 리스너

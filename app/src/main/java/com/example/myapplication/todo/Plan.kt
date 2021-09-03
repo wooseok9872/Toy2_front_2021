@@ -20,6 +20,3 @@ class planlist() {
     }
 }
 
-class todo_class(var content: String) : Serializable{
-
-}

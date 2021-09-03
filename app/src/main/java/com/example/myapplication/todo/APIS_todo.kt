@@ -16,12 +16,9 @@ interface APIS_todo {
     // todo리스트 생성
     @POST("study")
     fun post_todo(
-        @Body todoClass: todo_class
+        @Body planClass: plan
     ): Call<Post_Todo>
 
-    // todo리스트 수정
-    @PATCH("study/{studyId}")
-    fun patch_todo(@Path("studyId") studyId: Long): Call<Patch_Todo>
 
     @PUT("/study/{studyId}")
     fun put_todo(

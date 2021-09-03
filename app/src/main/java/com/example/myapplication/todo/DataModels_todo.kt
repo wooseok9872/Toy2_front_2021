@@ -19,18 +19,12 @@ data class Post_Todo(
     var status: Boolean
 )
 
-data class Patch_Todo(
-    var studyId: Long,
-    var content: String
-)
-
 data class Put_Todo(
     var studyId: Long,
     var status: Boolean
 )
 
 data class Delete_Todo(
-    var studyId: Long,
-    var content: String,
-    var status: Boolean
+    var code: Int,
+    var message: String
 )
