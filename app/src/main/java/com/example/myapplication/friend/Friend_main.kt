@@ -107,6 +107,82 @@ class Friend_main : AppCompatActivity() {
         List_Start()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        setContentView(R.layout.friend_main)
+
+        friendListview.FriendListview.clear()
+
+        val friend_add_button: ImageView = findViewById<ImageView>(R.id.friend_add_button)
+
+        //친구 추가 버튼 누르면 추가화면으로 이동
+        friend_add_button.setOnClickListener {
+            val intent = Intent(this, Friend_add::class.java)
+            startActivity(intent)
+        }
+
+        //todo list 화면으로 이동
+        todolist_button.setOnClickListener{
+            startActivity(Intent(this, Todo_main::class.java))
+            finish()
+        }
+        //타이머 화면으로 이동
+        home_button.setOnClickListener{
+            startActivity(Intent(this, TimerActivity::class.java))
+            finish()
+        }
+
+        // 리싸이클러뷰 어댑터 설정
+        mAdapter= ViewAdapter(friendListview)
+        val manager = LinearLayoutManager(this)
+        manager.reverseLayout = false
+        manager.stackFromEnd = false
+        friend_list_recyclerView.layoutManager = manager
+
+        friend_list_recyclerView.adapter = mAdapter
+
+
+        // 휴지통 버튼 클릭시
+        mAdapter.setItemClickListener(object : ViewAdapter.ItemClickListener {
+
+            override fun onClick(view:View, position: Int) {
+
+                userid = friendListview.FriendListview[position].userId
+
+                // 선택한 친구 목록 삭제
+                (application as MasterApplication).api.delete_users(userid).enqueue(object : Callback<DeleteModel> {
+                    override fun onResponse(call: Call<DeleteModel>, response: Response<DeleteModel>) {
+                        Log.d("log", response.toString())
+
+                        if(response.body()!!.code == 200){
+                            Toast.makeText(this@Friend_main, "삭제되었습니다", Toast.LENGTH_LONG).show()
+
+                            // 리사이클러뷰 초기화 할 필요 있음
+                            friendListview.FriendListview.clear()
+                            List_Start()
+                        }
+                        else if(response.body()!!.code == 400){
+                            Toast.makeText(this@Friend_main, response.body()!!.message, Toast.LENGTH_LONG).show()
+                        }
+
+
+                    }
+                    override fun onFailure(call: Call<DeleteModel>, t: Throwable) {
+                        // 실패
+                        Log.d("log",t.message.toString())
+                        Log.d("log","fail")
+                    }
+                })
+
+            }
+        })
+
+
+        // 리사이클러뷰 설정
+        friend_list_recyclerView.adapter = mAdapter
+
+        List_Start()
+    }
 
     fun List_Start() {
         // 친구 목록 데이터 받기
