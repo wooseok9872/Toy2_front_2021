@@ -36,13 +36,13 @@ class Todo_main : AppCompatActivity() {
         val todaydate: String = date.toString()
         today_date.setText(todaydate)
 
-        val mAdapter = planAdapter(planList)
         val manager = LinearLayoutManager(this)
         manager.reverseLayout = false
         manager.stackFromEnd = false
         list_todo.layoutManager = manager
 
         list_todo.adapter = mAdapter
+        List_start()
 
         //home 화면으로 이동
         home_button.setOnClickListener {
@@ -70,9 +70,7 @@ class Todo_main : AppCompatActivity() {
                     val params = plan(text)
                     (application as MasterApplication).api_todo.post_todo(params)
                         .enqueue(object : Callback<Post_Todo> {
-                            override fun onResponse(
-                                call: Call<Post_Todo>,
-                                response: Response<Post_Todo>
+                            override fun onResponse(call: Call<Post_Todo>, response: Response<Post_Todo>
                             ) {
                                 if (response.isSuccessful) {
                                     val planee = response.body()
@@ -101,10 +99,9 @@ class Todo_main : AppCompatActivity() {
                 if (status == "true") {
                     (application as MasterApplication).api_todo.put_todo(studyid, "false")
                         .enqueue(object : Callback<Put_Todo> {
-                            override fun onResponse(
-                                call: Call<Put_Todo>,
-                                response: Response<Put_Todo>
-                            ) {
+                            override fun onResponse(call: Call<Put_Todo>, response: Response<Put_Todo>) {
+                                planList.Planlist.clear()
+                                List_start()
                             }
 
                             override fun onFailure(call: Call<Put_Todo>, t: Throwable) {
@@ -114,10 +111,9 @@ class Todo_main : AppCompatActivity() {
                 } else {
                     (application as MasterApplication).api_todo.put_todo(studyid, "true")
                         .enqueue(object : Callback<Put_Todo> {
-                            override fun onResponse(
-                                call: Call<Put_Todo>,
-                                response: Response<Put_Todo>
-                            ) {
+                            override fun onResponse(call: Call<Put_Todo>, response: Response<Put_Todo>) {
+                                planList.Planlist.clear()
+                                List_start()
                             }
 
                             override fun onFailure(call: Call<Put_Todo>, t: Throwable) {
@@ -125,8 +121,6 @@ class Todo_main : AppCompatActivity() {
                             }
                         })
                 }
-
-
             }
         })
 
@@ -137,16 +131,14 @@ class Todo_main : AppCompatActivity() {
 
                 (application as MasterApplication).api_todo.delete_todo(studyId)
                     .enqueue(object : Callback<Delete_Todo> {
-                        override fun onResponse(
-                            call: Call<Delete_Todo>,
-                            response: Response<Delete_Todo>
+                        override fun onResponse(call: Call<Delete_Todo>, response: Response<Delete_Todo>
                         ) {
-                            if (response.body()!!.code == 201) {
+                            if (response.isSuccessful) {
                                 Toast.makeText(this@Todo_main, "삭제되었습니다", Toast.LENGTH_LONG).show()
 
                                 planList.Planlist.clear()
                                 List_start()
-                            } else if (response.body()!!.code == 404) {
+                            } else {
                                 Toast.makeText(
                                     this@Todo_main,
                                     response.body()!!.message,
@@ -156,15 +148,11 @@ class Todo_main : AppCompatActivity() {
                         }
 
                         override fun onFailure(call: Call<Delete_Todo>, t: Throwable) {
+                            Toast.makeText(this@Todo_main, "서버 오류", Toast.LENGTH_SHORT).show()
                         }
                     })
             }
         })
-
-        list_todo.adapter = mAdapter
-
-        List_start()
-
     }
 
     // todo 리스트 조회
