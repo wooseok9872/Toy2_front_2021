@@ -30,7 +30,6 @@ data class Put_Todo(
 )
 
 data class Delete_Todo(
-    var studyId: Long,
-    var content: String,
-    var status: Boolean
+    var code: Int,
+    var message: String
 )

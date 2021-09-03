@@ -14,11 +14,10 @@ interface APIS_todo {
     fun get_todo(): Call<Check_Get_Todo>
 
 
-
     // todo리스트 생성
     @POST("study")
     fun post_todo(
-        @Body todoClass: todo_class
+        @Body todoClass: todo
     ): Call<Post_Todo>
 
     // todo리스트 수정
