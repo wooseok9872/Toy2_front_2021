@@ -13,8 +13,6 @@ interface APIS_todo {
     @GET("study")
     fun get_todo(): Call<Check_Get_Todo>
 
-
-
     // todo리스트 생성
     @POST("study")
     fun post_todo(
@@ -26,7 +24,10 @@ interface APIS_todo {
     fun patch_todo(@Path("studyId") studyId: Long): Call<Patch_Todo>
 
     @PUT("/study/{studyId}")
-    fun put_todo(@Path("studyId") studyId: Long): Call<Put_Todo>
+    fun put_todo(
+        @Path("studyId") studyId: Long,
+        @Query("status") status: String,
+    ): Call<Put_Todo>
 
     @DELETE("/study/{studyId}")
     fun delete_todo(@Path("studyId") studyId: Long): Call<Delete_Todo>

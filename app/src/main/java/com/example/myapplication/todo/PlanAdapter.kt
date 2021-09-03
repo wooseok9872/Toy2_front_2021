@@ -13,6 +13,8 @@ class planAdapter(
     val plan_list: planlist
 ) : RecyclerView.Adapter<planAdapter.ViewHolder>() {
 
+    private lateinit var planClickListner: PlanClickListener
+
     inner class ViewHolder(todo_view: View) : RecyclerView.ViewHolder(todo_view) {
         val planContent: TextView
         val todoIsDone: CheckBox
@@ -28,11 +30,19 @@ class planAdapter(
         return ViewHolder(view)
     }
 
-    public override fun getItemCount(): Int {
+    override fun getItemCount(): Int {
         val sum: Int = plan_list.Planlist.size
         Log.d("sum", "" + sum)
 
         return plan_list.Planlist.size
+    }
+
+    // 리사이클러뷰 아이템클릭 리스너
+    interface PlanClickListener {
+        fun onClick(view: View, position: Int)
+    }
+    fun setItemClickListener(planClickListener:PlanClickListener) {
+        this.planClickListner = planClickListener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -40,6 +50,9 @@ class planAdapter(
         val todo = plan_list.Planlist[position]
 
         holder.planContent.text = todo.content
+
+        holder.todoIsDone.isChecked = plan_list.Planlist[position].status.toString()=="true"
+
 
         holder.todoIsDone.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -50,7 +63,12 @@ class planAdapter(
                 cnt--
                 Log.d("state--", "" + cnt)
             }
+
+        }
+
+        // 리사이클러뷰 아이템클릭 리스너
+        holder.todoIsDone.setOnClickListener() {
+            planClickListner.onClick(it, position)
         }
     }
-
 }
