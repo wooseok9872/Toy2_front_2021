@@ -1,6 +1,6 @@
 package com.example.myapplication
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.friend.*
 import com.example.myapplication.todo.Todo_main
-
 import kotlinx.android.synthetic.main.activity_todo_main.*
 import kotlinx.android.synthetic.main.friend_add.*
 import kotlinx.android.synthetic.main.friend_list_item.*
@@ -25,18 +24,23 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Friend_main : AppCompatActivity() {
+
     val api = APIS.create()
+    var userid : Long = 401
+    val friendListview: friendListView = friendListView()
+    var mAdapter= ViewAdapter(friendListview)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.friend_main)
+
 
         val friend_add_button: ImageView = findViewById<ImageView>(R.id.friend_add_button)
 
         val todolist_button: ImageView = findViewById<ImageView>(R.id.todolist_button)
         val home_button: ImageView = findViewById<ImageView>(R.id.home_button)
 
-        var userid : Long = 401
 
         //친구 추가 버튼 누르면 추가화면으로 이동
         friend_add_button.setOnClickListener {
@@ -56,14 +60,8 @@ class Friend_main : AppCompatActivity() {
         }
 
 
-
-
-        val friendListview: friendListView = friendListView()
-
-
-
         // 리싸이클러뷰 어댑터 설정
-        val mAdapter= ViewAdapter(friendListview)
+        mAdapter= ViewAdapter(friendListview)
         val manager = LinearLayoutManager(this)
         manager.reverseLayout = false
         manager.stackFromEnd = false
@@ -72,8 +70,7 @@ class Friend_main : AppCompatActivity() {
         friend_list_recyclerView.adapter = mAdapter
 
 
-
-
+        // 휴지통 버튼 클릭시
         mAdapter.setItemClickListener(object : ViewAdapter.ItemClickListener {
 
             override fun onClick(view:View, position: Int) {
@@ -88,12 +85,9 @@ class Friend_main : AppCompatActivity() {
                         if(response.body()!!.code == 200){
                             Toast.makeText(this@Friend_main, "삭제되었습니다", Toast.LENGTH_LONG).show()
 
-                            // 리싸이클러뷰 어댑터 설정
-                            manager.reverseLayout = false
-                            manager.stackFromEnd = false
-                            friend_list_recyclerView.layoutManager = manager
-                            friend_list_recyclerView.adapter = mAdapter
-
+                            // 리사이클러뷰 초기화 할 필요 있음
+                            friendListview.FriendListview.clear()
+                            List_Start()
                         }
                         else if(response.body()!!.code == 400){
                             Toast.makeText(this@Friend_main, response.body()!!.message, Toast.LENGTH_LONG).show()
@@ -115,7 +109,11 @@ class Friend_main : AppCompatActivity() {
         // 리사이클러뷰 설정
         friend_list_recyclerView.adapter = mAdapter
 
+        List_Start()
+    }
 
+
+    fun List_Start() {
         // 친구 목록 데이터 받기
         api.get2_users().enqueue(object : Callback<CheckGetModel2> {
             override fun onResponse(call: Call<CheckGetModel2>, response: Response<CheckGetModel2>) {
@@ -159,18 +157,10 @@ class Friend_main : AppCompatActivity() {
                 Log.d("log","fail")
             }
         })
-
-
-
-
-    }
-
-    fun onStart(savedInstanceState: Bundle?) {
-
     }
 
     class ViewAdapter(
-        val friend_List: friendListView
+        val friend_List: friendListView,
     ) : RecyclerView.Adapter<ViewAdapter.ViewHolder>() {
 
         private lateinit var itemClickListner: ItemClickListener
@@ -231,8 +221,6 @@ class Friend_main : AppCompatActivity() {
             holder.friend_delete.setOnClickListener {
                 itemClickListner.onClick(it, position)
             }
-
-
         }
     }
 }
