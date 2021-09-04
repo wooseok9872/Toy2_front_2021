@@ -59,9 +59,9 @@
 [✏️ API](https://sage-vest-248.notion.site/API-055f1970b9294364b0cb151cd0233b35)
 </h3>  
 
-<img src="https://user-images.githubusercontent.com/63601183/132092719-b3fd4ace-de1c-48bd-b4ab-7d6afa1894e0.png" width="2000" height="400">
+<i><img src="https://user-images.githubusercontent.com/63601183/132092719-b3fd4ace-de1c-48bd-b4ab-7d6afa1894e0.png" width="2000" height="400"></i>
 <br>
- <i> </i>
+
  <br>
   [💫 **Back-end 바로 가기**](https://github.com/lookiesmu/Toy2_back_2021)
 </div>
