@@ -61,5 +61,6 @@
 
 <img src="https://user-images.githubusercontent.com/63601183/132092719-b3fd4ace-de1c-48bd-b4ab-7d6afa1894e0.png" width="2000" height="400">
 
-  [💫 **Front-end 바로 가기**](https://github.com/lookiesmu/Toy2_front_2021)
+  [💫 **Back-end 바로 가기**](https://github.com/lookiesmu/Toy2_back_2021)
 </div>
+
